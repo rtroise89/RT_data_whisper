@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Richard T | Looking Beyond Numbers</title>
+    <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@200;300;400;600;700;900&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0a0e1a;
+            --bg-card: #111827;
+            --accent-primary: #00d4ff;
+            --accent-secondary: #7c3aed;
+            --accent-tertiary: #f59e0b;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --grid-color: rgba(0, 212, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Titillium Web', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated background grid */
+        .background-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(var(--grid-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: 0;
+            animation: gridPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes gridPulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+        }
+
+        /* Floating mathematical symbols */
+        .math-symbols {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .symbol {
+            position: absolute;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--accent-primary);
+            opacity: 0.1;
+            font-weight: 300;
+            animation: float linear infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.1;
+            }
+            90% {
+                opacity: 0.1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Header Section */
+        header {
+            padding: 8rem 0 4rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .title-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+
+        h1 {
+            font-family: 'Titillium Web', sans-serif;
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 900;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            animation: titleSlide 1s ease-out;
+        }
+
+        @keyframes titleSlide {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .subtitle {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: clamp(0.9rem, 2vw, 1.2rem);
+            color: var(--text-secondary);
+            font-weight: 300;
+            letter-spacing: 0.05em;
+            animation: subtitleSlide 1s ease-out 0.2s backwards;
+        }
+
+        @keyframes subtitleSlide {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* About Section */
+        .about-section {
+            margin: 4rem 0;
+            padding: 3rem;
+            background: rgba(17, 24, 39, 0.5);
+            border-radius: 1rem;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            backdrop-filter: blur(10px);
+            animation: fadeInUp 1s ease-out 0.4s backwards;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--accent-primary), var(--accent-secondary), var(--accent-tertiary));
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .about-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .about-title::before {
+            content: '▸';
+            color: var(--accent-primary);
+            font-size: 1.5rem;
+        }
+
+        .about-content {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            font-size: 1.05rem;
+            max-width: 900px;
+        }
+
+        .about-content p {
+            margin-bottom: 1rem;
+        }
+
+        .about-content p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Projects Section */
+        .section-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            margin: 4rem 0 2rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::before {
+            content: '◆';
+            position: absolute;
+            left: -40px;
+            color: var(--accent-tertiary);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .project-card {
+            background: var(--bg-card);
+            border-radius: 1rem;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            animation: fadeInUp 1s ease-out backwards;
+        }
+
+        .project-card:nth-child(1) { animation-delay: 0.5s; }
+        .project-card:nth-child(2) { animation-delay: 0.6s; }
+        .project-card:nth-child(3) { animation-delay: 0.7s; }
+        .project-card:nth-child(4) { animation-delay: 0.8s; }
+        .project-card:nth-child(5) { animation-delay: 0.9s; }
+        .project-card:nth-child(6) { animation-delay: 1s; }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent-primary);
+            box-shadow: 0 20px 40px rgba(0, 212, 255, 0.2);
+        }
+
+        .project-card:hover::before {
+            opacity: 0.05;
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .project-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .project-status {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .status-active {
+            background: rgba(0, 212, 255, 0.2);
+            color: var(--accent-primary);
+            border: 1px solid var(--accent-primary);
+        }
+
+        .status-completed {
+            background: rgba(34, 197, 94, 0.2);
+            color: #22c55e;
+            border: 1px solid #22c55e;
+        }
+
+        .status-planning {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--accent-tertiary);
+            border: 1px solid var(--accent-tertiary);
+        }
+
+        .project-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .tech-tag {
+            font-size: 0.8rem;
+            padding: 0.4rem 0.8rem;
+            background: rgba(124, 58, 237, 0.2);
+            color: var(--accent-secondary);
+            border-radius: 0.5rem;
+            font-family: 'JetBrains Mono', monospace;
+            border: 1px solid rgba(124, 58, 237, 0.3);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 4rem 0 2rem;
+            margin-top: 4rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-item {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+        }
+
+        .contact-item:hover {
+            color: var(--accent-primary);
+        }
+
+        .footer-text {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .section-title::before {
+                left: -30px;
+            }
+
+            header {
+                padding: 4rem 0 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background-grid"></div>
+    <div class="math-symbols"></div>
+
+    <div class="container">
+        <header>
+            <div class="title-wrapper">
+                <h1>Richard T | Looking Beyond Numbers</h1>
+            </div>
+            <p class="subtitle">- Transmitting on all data frequencies</p>
+        </header>
+
+        <section class="about-section">
+            <h2 class="about-title">About Myself</h2>
+            <div class="about-content">
+                <p>
+                    [Your introduction goes here - tell visitors who you are, what drives your passion for mathematics, data, and statistics. This is your chance to make a strong first impression.]
+                </p>
+                <p>
+                    [Share your background, education, or professional experience. What unique perspective do you bring to data analysis and statistical modeling? What problems do you love solving?]
+                </p>
+                <p>
+                    [Mention your current focus areas, what you're learning, or what excites you about the future of data science. This helps visitors understand your journey and aspirations.]
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <div class="project-card">
+                <div class="project-header">
+                    <h3 class="project-title">
+                        <a href="https://rtroise89.github.io/pre_calcChap1/" target="_blank" style="color: inherit; text-decoration: none;">
+                            Pre-Calculus Primer
+                        </a>
+                    </h3>
+                    <span class="project-status status-active">Active</span>
+                </div>
+                <p class="project-description">
+                    A web textbook for math-anxious students
+                </p>
+                <div class="project-tech">
+                    <span class="tech-tag">Desmos</span>
+                    <span class="tech-tag">Jupyter Lab</span>
+                    <span class="tech-tag">HTML</span>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-header">
+                    <h3 class="project-title">
+                        <a href="https://www.kaggle.com/code/richtroi/coffee-sales-analysis" target="_blank" style="color: inherit; text-decoration: none;">
+                            Coffee Profits or Bust?
+                        </a>
+                    </h3>
+                    <span class="project-status status-active">Completed</span>
+                </div>
+                <p class="project-description">
+                    My first data analysis project uploaded to Kaggle
+                </p>
+                <div class="project-tech">
+                    <span class="tech-tag">Kaggle</span>
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">Markdown</span>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <div class="contact-info">
+                <a href="https://github.com/rtroise89" class="contact-item">Github</a>
+                <a href="https://linkedin.com/in/richardtroise" class="contact-item">LinkedIn</a>
+            </div>
+            <p class="footer-text">© 2026 Richard T. Statistics is like life - offers no guarantees.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Generate floating mathematical symbols
+        const mathSymbols = ['∑', 'π', '∫', '√', 'Δ', 'Σ', 'μ', 'σ', '∂', '∞', 'α', 'β', 'θ', 'λ', '≈', '≠', '≤', '≥', '∈', '∪', '∩'];
+        const container = document.querySelector('.math-symbols');
+        
+        function createSymbol() {
+            const symbol = document.createElement('div');
+            symbol.className = 'symbol';
+            symbol.textContent = mathSymbols[Math.floor(Math.random() * mathSymbols.length)];
+            symbol.style.left = Math.random() * 100 + '%';
+            symbol.style.fontSize = (Math.random() * 30 + 20) + 'px';
+            symbol.style.animationDuration = (Math.random() * 20 + 15) + 's';
+            symbol.style.animationDelay = Math.random() * 5 + 's';
+            container.appendChild(symbol);
+            
+            setTimeout(() => symbol.remove(), 25000);
+        }
+        
+        // Create initial symbols
+        for (let i = 0; i < 20; i++) {
+            setTimeout(createSymbol, i * 500);
+        }
+        
+        // Continuously add new symbols
+        setInterval(createSymbol, 2000);
+    </script>
